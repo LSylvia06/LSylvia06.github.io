@@ -1,11 +1,391 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>我的名片</title>
-    <meta charset="utf-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>✨ 我的名片 · 优雅质感</title>
+  <!-- 引入 Google Font 提升现代感 (Inter + 优雅衬线备用) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    /* 全局重置与基调 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at 15% 30%, #f9f3e8 0%, #e8dfd1 100%);
+      /* 柔和米白基底，带一点暖调 */
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      line-height: 1.5;
+      color: #2e2b28;
+      /* 精致深褐色，比黑色更柔和 */
+    }
+
+    /* 名片卡片 —— 主要容器 */
+    .business-card {
+      max-width: 760px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      /* 毛玻璃效果 */
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 2.5rem;
+      padding: 2.8rem 2.8rem 2.8rem 3rem;
+      box-shadow: 
+        0 30px 50px -20px rgba(60, 45, 30, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.6) inset,
+        0 0 0 1px rgba(210, 190, 170, 0.3);
+      /* 多层立体阴影 */
+      transition: transform 0.3s ease, box-shadow 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    /* 轻微悬停漂浮感，更生动 */
+    .business-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 
+        0 40px 60px -22px rgba(60, 45, 30, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.8) inset,
+        0 0 0 1px rgba(190, 165, 140, 0.4);
+    }
+
+    /* 头部区域：含头像和标题 */
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    /* 抽象头像 / 装饰徽标 —— 更具设计感 */
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 40% 60% 70% 30% / 50% 60% 40% 50%;
+      /* 有机形状 */
+      background: linear-gradient(135deg, #cbad8d, #b18b6b, #9c7b5c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      font-weight: 300;
+      color: #fff7ed;
+      text-shadow: 0 6px 12px rgba(80, 50, 20, 0.3);
+      box-shadow: 
+        0 12px 18px -8px rgba(80, 60, 40, 0.4),
+        0 0 0 4px rgba(255, 255, 255, 0.7);
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+      border: 1px solid rgba(255, 240, 220, 0.8);
+    }
+
+    .avatar:hover {
+      border-radius: 50% 40% 60% 40% / 40% 50% 50% 60%;
+      transform: scale(1.02) rotate(1deg);
+    }
+
+    /* 主标题 —— 名字和职位 */
+    .title-group {
+      flex: 1;
+    }
+
+    .title-group h1 {
+      font-size: 2.8rem;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+      color: #2c241b;
+      line-height: 1.2;
+      margin-bottom: 0.35rem;
+      text-shadow: 0 2px 4px rgba(255, 255, 255, 0.7);
+    }
+
+    .title-group .badge {
+      display: inline-block;
+      background: rgba(155, 120, 90, 0.15);
+      backdrop-filter: blur(4px);
+      padding: 0.35rem 1rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #6d4f36;
+      letter-spacing: 0.3px;
+      border: 1px solid rgba(170, 140, 110, 0.3);
+      margin-top: 0.2rem;
+    }
+
+    /* 分隔线 —— 细腻且不抢眼 */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(160, 130, 100, 0.3), rgba(160, 130, 100, 0.5), rgba(160, 130, 100, 0.3), transparent);
+      margin: 0.5rem 0 0.5rem;
+    }
+
+    /* 简介段落 */
+    .bio {
+      font-size: 1.1rem;
+      font-weight: 350;
+      color: #4f4338;
+      max-width: 85%;
+      margin-top: 0.25rem;
+      line-height: 1.6;
+      letter-spacing: -0.01em;
+    }
+
+    /* 技能组 —— 优雅小标签 */
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem 0.9rem;
+      margin-top: 0.5rem;
+    }
+
+    .skill-tag {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(180, 150, 120, 0.35);
+      padding: 0.5rem 1.2rem;
+      border-radius: 60px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #4f3e2e;
+      transition: all 0.2s;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+      letter-spacing: 0.2px;
+    }
+
+    .skill-tag:hover {
+      background: #fffaf2;
+      border-color: #b59a80;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 14px -6px rgba(120, 90, 60, 0.2);
+      color: #2f231a;
+    }
+
+    /* 联系方式区域：整洁排列 */
+    .contact-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem 2.5rem;
+      align-items: center;
+      margin-top: 0.3rem;
+      padding-top: 0.8rem;
+      border-top: 1px dashed rgba(170, 140, 110, 0.3);
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 1rem;
+      font-weight: 400;
+      color: #4c3f34;
+      transition: color 0.2s;
+      background: rgba(255, 255, 255, 0.4);
+      padding: 0.4rem 1rem 0.4rem 0.8rem;
+      border-radius: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .contact-item:hover {
+      color: #1f150e;
+      background: rgba(255, 255, 255, 0.8);
+      border-color: rgba(190, 160, 130, 0.5);
+    }
+
+    .contact-icon {
+      font-size: 1.25rem;
+      line-height: 1;
+      filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1));
+    }
+
+    /* 邮箱链接特殊处理，但不至于太夸张 */
+    .contact-item a {
+      text-decoration: none;
+      color: inherit;
+      border-bottom: 1px dotted rgba(140, 110, 80, 0.5);
+      transition: border-color 0.2s;
+    }
+
+    .contact-item a:hover {
+      border-bottom-color: #4f3e2e;
+    }
+
+    /* 社交小提示或尾巴 */
+    .footer-note {
+      font-size: 0.8rem;
+      text-align: right;
+      color: #9b8b7a;
+      letter-spacing: 0.3px;
+      font-weight: 350;
+      margin-top: 0.2rem;
+      font-style: italic;
+    }
+
+    /* 响应式调整 */
+    @media (max-width: 600px) {
+      body {
+        padding: 1rem;
+      }
+
+      .business-card {
+        padding: 1.8rem 1.5rem;
+        border-radius: 2rem;
+        gap: 1.5rem;
+      }
+
+      .card-header {
+        gap: 1.2rem;
+      }
+
+      .avatar {
+        width: 75px;
+        height: 75px;
+        font-size: 2.2rem;
+      }
+
+      .title-group h1 {
+        font-size: 2rem;
+      }
+
+      .bio {
+        max-width: 100%;
+        font-size: 1rem;
+      }
+
+      .contact-section {
+        gap: 0.8rem;
+      }
+
+      .contact-item {
+        font-size: 0.9rem;
+        padding: 0.3rem 0.8rem;
+      }
+
+      .footer-note {
+        text-align: left;
+      }
+    }
+
+    /* 如果有深色模式偏好，做细微适配 */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: radial-gradient(circle at 15% 30%, #332e28 0%, #1e1b18 100%);
+      }
+      .business-card {
+        background: rgba(45, 40, 35, 0.8);
+        backdrop-filter: blur(12px);
+        border-color: rgba(120, 100, 80, 0.4);
+        box-shadow: 0 30px 50px -20px #0a0806, 0 0 0 1px rgba(180, 150, 120, 0.2) inset;
+        color: #e6ddd2;
+      }
+      .title-group h1 {
+        color: #f2e7db;
+        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      }
+      .title-group .badge {
+        background: rgba(190, 160, 130, 0.2);
+        color: #ddcdbb;
+        border-color: rgba(200, 170, 140, 0.5);
+      }
+      .bio {
+        color: #cfc2b3;
+      }
+      .skill-tag {
+        background: rgba(60, 50, 40, 0.7);
+        border-color: rgba(150, 120, 90, 0.6);
+        color: #e2d4c4;
+      }
+      .skill-tag:hover {
+        background: rgba(80, 68, 55, 0.9);
+        color: #fff8ee;
+      }
+      .contact-item {
+        background: rgba(50, 42, 35, 0.6);
+        color: #d6c8b8;
+        border-color: rgba(130, 100, 70, 0.5);
+      }
+      .contact-item:hover {
+        background: rgba(70, 60, 50, 0.8);
+        color: #f0e4d6;
+        border-color: rgba(180, 150, 120, 0.8);
+      }
+      .divider {
+        background: linear-gradient(90deg, transparent, #5b4c3c, #8a745e, #5b4c3c, transparent);
+      }
+      .contact-section {
+        border-top-color: rgba(130, 110, 90, 0.5);
+      }
+      .footer-note {
+        color: #a69580;
+      }
+      .avatar {
+        border-color: rgba(120, 100, 80, 0.6);
+        box-shadow: 0 12px 18px -8px #0000004d, 0 0 0 4px rgba(70, 60, 50, 0.6);
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>你好，我是 你的名字</h1>
+  <main class="business-card">
+    <!-- 头部：抽象头像 + 姓名与职位徽章 -->
+    <div class="card-header">
+      <div class="avatar" aria-hidden="true">👤</div>
+      <div class="title-group">
+        <h1>你的名字</h1>
+        <span class="badge">创意开发者 & 设计师</span>
+      </div>
+    </div>
 
+    <!-- 简介 + 技能标签 -->
+    <div>
+      <p class="bio">
+        热爱将想法转化为优雅的数字体验，专注于前端交互与视觉设计。相信简洁是终极的精致。
+      </p>
+      <div class="skills">
+        <span class="skill-tag">UI/UX 设计</span>
+        <span class="skill-tag">HTML5 & CSS3</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">响应式开发</span>
+        <span class="skill-tag">交互动效</span>
+      </div>
+    </div>
+
+    <!-- 一条精细的分隔线 -->
+    <div class="divider"></div>
+
+    <!-- 联系方式区域 -->
+    <div class="contact-section">
+      <div class="contact-item">
+        <span class="contact-icon">📧</span>
+        <a href="mailto:hello@yourname.com">hello@yourname.com</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">📱</span>
+        <span>+86 138 0000 1234</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">🌐</span>
+        <span>www.yourname.design</span>
+      </div>
+    </div>
+
+    <!-- 装饰性小尾巴 -->
+    <div class="footer-note">
+      ✦ 随时联系，一起创造 ✦
+    </div>
+  </main>
 </body>
 </html>
